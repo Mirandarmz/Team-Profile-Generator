@@ -1,16 +1,16 @@
 const inquirer = require("inquirer");
-const employee = require("./Lib/Employee");
-const manager = require("./Lib/Manager");
-const intern = require("./Lib/Intern");
-const engineer = require("./Lib/Engineer");
+const employee = require("./Lib/Employee.js");
+let Manager = require("./Lib/Manager.js");
+let Intern = require("./Lib/Intern.js");
+let Engineer = require("./Lib/Engineer.js");
 const { writeFile } = require("fs");
-const newManager;
+let newManager;
 let engineers=[];
 let interns=[];
 
 function init(){
     inquirer.prompt(
-    {
+    [{
         type: "input",
         name: "managerName",
         message: "Please enter the team manager's name",
@@ -29,10 +29,10 @@ function init(){
         type: "input",
         name: "managerOffice",
         message: "Please enter the team manager's office number",
-    },
+    }]
     )
     .then(function(response){
-        newManager = new manager(response.managerName,response.managerId,repsonse.managerEmail,repsonse.managerOffice);
+        newManager = new Manager(response.managerName,response.managerId,response.managerEmail,response.managerOffice);
         nextAddition();
 
     })
@@ -46,9 +46,10 @@ function nextAddition(){
         type: "list",
         name: "nextAddition",
         message: "Please select who you want to add next",
-        options: ["Engineer","Intern","Finish building my team"]
+        choices: ["Engineer","Intern","Finish building my team"]
     })
     .then(function(response){
+        console.log(response)
         switch(response.nextAddition){
             case "Engineer":
                 addEngineer();
@@ -57,8 +58,8 @@ function nextAddition(){
                 addIntern();
                 break;
             case "Finish building my team":
+                //writeFile();
                 console.log("You are done! Open the html file to see your team");
-                writeFile();
                 return;
         }
     })
@@ -68,7 +69,7 @@ function nextAddition(){
 }
 
 function addEngineer(){
-    inquirer.prompt(
+    inquirer.prompt([
         {
             type: "input",
             name: "name",
@@ -88,11 +89,11 @@ function addEngineer(){
             type: "input",
             name: "github",
             message: "Please enter the team Engineer's github user",
-        },
+        }]
         )
         .then(function(response){
-            const engineer = new engineer(response.name,response.id,repsonse.email,repsonse.github);
-            interns.push(engineer);
+            const engineer = new Engineer(response.name,response.id,response.email,response.github);
+            engineers.push(engineer);
             nextAddition();
     
         })
@@ -102,7 +103,7 @@ function addEngineer(){
 }
 
 function addIntern(){
-    inquirer.prompt(
+    inquirer.prompt([
         {
             type: "input",
             name: "name",
@@ -122,10 +123,10 @@ function addIntern(){
             type: "input",
             name: "school",
             message: "Please enter the team Intern's school",
-        },
+        }]
         )
         .then(function(response){
-            const intern = new intern(response.name,response.id,repsonse.email,repsonse.school);
+            const intern = new Intern(response.name,response.id,response.email,response.school);
             interns.push(intern);
             nextAddition();
     
@@ -134,5 +135,6 @@ function addIntern(){
             console.log(err);
         });
 }
+
 
 init();
