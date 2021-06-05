@@ -3,10 +3,11 @@ const employee = require("./Lib/Employee.js");
 let Manager = require("./Lib/Manager.js");
 let Intern = require("./Lib/Intern.js");
 let Engineer = require("./Lib/Engineer.js");
-const { writeFile } = require("fs");
 let newManager;
 let engineers=[];
 let interns=[];
+const fs = require('fs'); 
+const createHTML = require('./src/generateFile');
 
 function init(){
     inquirer.prompt(
@@ -58,7 +59,7 @@ function nextAddition(){
                 addIntern();
                 break;
             case "Finish building my team":
-                //writeFile();
+                writeFile();
                 console.log("You are done! Open the html file to see your team");
                 return;
         }
@@ -136,5 +137,16 @@ function addIntern(){
         });
 }
 
-
+function writeFile(){
+    fs.writeFile('./dist/index.html', createHTML(engineers,interns,newManager), err => {
+        // if there is an error 
+        if (err) {
+            console.log(err);
+            return;
+        // when the profile has been created 
+        } else {
+            console.log("Your team profile has been successfully created! Please check out the index.html")
+        }
+    })
+}; 
 init();
