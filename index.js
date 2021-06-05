@@ -1,13 +1,16 @@
+//Imported necessary packages to be utilized in the script 
 const inquirer = require("inquirer");
 let Manager = require("./Lib/Manager.js");
 let Intern = require("./Lib/Intern.js");
 let Engineer = require("./Lib/Engineer.js");
+const fs = require('fs'); 
+const createHTML = require('./src/generateFile');
+//Declared 3 global variables that will be used throughout the proyect
 let newManager;
 let engineers=[];
 let interns=[];
-const fs = require('fs'); 
-const createHTML = require('./src/generateFile');
 
+//Function that runs when the index.js is invoked, prompting the user and using inputs to call functionality
 function init(){
     inquirer.prompt(
     [{
@@ -32,6 +35,7 @@ function init(){
     }]
     )
     .then(function(response){
+        //Create manager and prompt user for the next additions, manager is already globally declared
         newManager = new Manager(response.managerName,response.managerId,response.managerEmail,response.managerOffice);
         nextAddition();
 
@@ -41,15 +45,16 @@ function init(){
     });
 }
 
+//In the next addition function, the user is prompted with a list to choose whether to add an engineer, an intern or finish building the team
 function nextAddition(){
     inquirer.prompt(    {
         type: "list",
         name: "nextAddition",
         message: "Please select who you want to add next",
-        choices: ["Engineer","Intern","Finish building my team"]
+        choices: ["Engineer","Intern","Finish my team"]
     })
     .then(function(response){
-        console.log(response)
+        //Depending on the response the user enters, a function to add an engineer or an intern is called or if the user is finished, the function to generate the HTML file is called
         switch(response.nextAddition){
             case "Engineer":
                 addEngineer();
@@ -68,6 +73,7 @@ function nextAddition(){
     })
 }
 
+//Function that requests for the engineer's data to the user, creates an engineer and adds it to the engineers array 
 function addEngineer(){
     inquirer.prompt([
         {
@@ -102,6 +108,7 @@ function addEngineer(){
         });
 }
 
+//Function that requests for the intern's data to the user, creates an intern and adds it to the engineers array 
 function addIntern(){
     inquirer.prompt([
         {
@@ -136,6 +143,7 @@ function addIntern(){
         });
 }
 
+//Function that writes the file with the string generated in the createHTML function with the engineers and interns array and the manager created
 function writeFile(){
     fs.writeFile('./dist/index.html', createHTML(engineers,interns,newManager), err => {
         if (err) {

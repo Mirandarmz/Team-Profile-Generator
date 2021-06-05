@@ -1,3 +1,4 @@
+//Function that generates the HTML code of the card for the manager given a manager object using its attributes
 function createManager(manager) {
     return `
     <div class="col-4 mt-4">
@@ -16,6 +17,7 @@ function createManager(manager) {
     `;
 }
 
+//Function that generates the HTML code of the card for the engineer given a engineer object using its attributes
 function createEngineer(engineer) {
     return `
     <div class="col-4 mt-4">
@@ -34,6 +36,7 @@ function createEngineer(engineer) {
     `
 }
 
+//Function that generates the HTML code of the card for the intern given a intern object using its attributes
 function createIntern(intern) {
     return `
     <div class="col-4 mt-4">
@@ -52,6 +55,7 @@ function createIntern(intern) {
     `
 };
 
+//Function that creates the html for every engineer, intern and the manager and joins the info in a single string, which is sent as a parameter to the join content function
 function createHTML(engineers,interns,manager){
     let pageCards = []; 
 
@@ -75,7 +79,8 @@ function createHTML(engineers,interns,manager){
 
 }
 
-const joinContent = function (pageContent) {   
+//Function that generates the entire html code, adding the cards html content generated in the createHTML function to the body 
+function joinContent(pageContent) {   
   return`
   <!DOCTYPE html>
   <html lang="en">
@@ -84,9 +89,7 @@ const joinContent = function (pageContent) {
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Team Profile</title>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
-      <link href="https://fonts.googleapis.com/css?family=Public+Sans:300i,300,500&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
       <link rel="stylesheet" href="style.css">
   </head>
   <body>
@@ -111,4 +114,5 @@ const joinContent = function (pageContent) {
 `;
 }
 
+//Export the main function (createHTML) to be utilized in the index
 module.exports = createHTML; 
