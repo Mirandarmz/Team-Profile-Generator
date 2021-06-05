@@ -1,5 +1,4 @@
 const inquirer = require("inquirer");
-const employee = require("./Lib/Employee.js");
 let Manager = require("./Lib/Manager.js");
 let Intern = require("./Lib/Intern.js");
 let Engineer = require("./Lib/Engineer.js");
@@ -139,13 +138,11 @@ function addIntern(){
 
 function writeFile(){
     fs.writeFile('./dist/index.html', createHTML(engineers,interns,newManager), err => {
-        // if there is an error 
         if (err) {
             console.log(err);
             return;
-        // when the profile has been created 
         } else {
-            console.log("Your team profile has been successfully created! Please check out the index.html")
+            console.log("Success! Open the index.html file to see your generated page")
         }
     })
 }; 

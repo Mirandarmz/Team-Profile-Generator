@@ -1,4 +1,3 @@
-// create Manager card
 function createManager(manager) {
     return `
     <div class="col-4 mt-4">
@@ -17,7 +16,6 @@ function createManager(manager) {
     `;
 }
 
-// create Engineer card
 function createEngineer(engineer) {
     return `
     <div class="col-4 mt-4">
@@ -36,7 +34,6 @@ function createEngineer(engineer) {
     `
 }
 
-// create Intern card 
 function createIntern(intern) {
     return `
     <div class="col-4 mt-4">
@@ -55,10 +52,7 @@ function createIntern(intern) {
     `
 };
 
-// push array to page 
 function createHTML(engineers,interns,manager){
-
-    // array for cards 
     let pageCards = []; 
 
     const managerCard=createManager(manager);
@@ -74,17 +68,13 @@ function createHTML(engineers,interns,manager){
         pageCards.push(internCard);
     }
 
-
-    // joining strings 
     const pageContent = pageCards.join('');
 
-    // return to generated page
     const finalPage = joinContent(pageContent); 
     return finalPage;
 
 }
 
-// generate html page 
 const joinContent = function (pageContent) {   
   return`
   <!DOCTYPE html>
@@ -121,5 +111,4 @@ const joinContent = function (pageContent) {
 `;
 }
 
-// export to index
 module.exports = createHTML; 
